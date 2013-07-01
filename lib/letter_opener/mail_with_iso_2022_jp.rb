@@ -18,11 +18,13 @@ module LetterOpener
     end
 
     def html_part &block
-      MailWithIso2022Jp.new(@mail.html_part(&block))
+      part = @mail.html_part(&block)
+      MailWithIso2022Jp.new(part) if part
     end
 
     def text_part &block
-      MailWithIso2022Jp.new(@mail.text_part(&block))
+      part = @mail.text_part(&block)
+      MailWithIso2022Jp.new(part) if part
     end
 
     def [] key

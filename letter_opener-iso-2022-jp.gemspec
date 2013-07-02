@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = "0.0.1"
   spec.authors       = ["hamajyotan"]
   spec.email         = ["takashi.sakaguchi@ummm.info"]
-  spec.description   = "gem letter_opener will not be able to correctly display ISO-2022-JP encoded email. This gem will eliminate the problem."
+  spec.description   = "This patch provides 'letter_opener' gem with iso-2022-jp conversion capability."
   spec.summary       = "letter_opener with iso-2022-jp encoding."
   spec.homepage      = "http://github.com/ummm/letter_opener-iso-2022-jp"
   spec.license       = "MIT"

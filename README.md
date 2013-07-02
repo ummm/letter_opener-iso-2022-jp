@@ -1,6 +1,6 @@
 # letter_opener-iso-2022-jp
 
-TODO: Write a gem description
+This patch provides 'letter_opener' gem with iso-2022-jp conversion capability.
 
 ## Installation
 
@@ -16,10 +16,6 @@ Or install it yourself as:
 
     $ gem install letter_opener-iso-2022-jp
 
-## Usage
-
-TODO: Write usage instructions here
-
 ## Contributing
 
 1. Fork it
@@ -27,3 +23,4 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+

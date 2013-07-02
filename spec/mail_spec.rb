@@ -2,8 +2,19 @@
 
 require "spec_helper"
 
+require "uri"
+
 describe Mail do
-  let(:location) { Mail.delivery_method.settings[:location] }
+  before do
+    Launchy.stub!(:open).and_return do |uri|
+      path = URI.parse(uri).path
+      dir = File.dirname(path)
+
+      messages.clear
+      Dir[File.join(dir, "**")].each(&messages.method(:<<))
+    end
+  end
+  let(:messages) { @messages ||= [] }
 
   context "given utf-8 encoded mail" do
     before do
@@ -18,8 +29,10 @@ describe Mail do
       mail.deliver
     end
 
-    subject { 1 + 2 }
-    it { expect(subject).to be 3 }
+    describe "messages" do
+      subject { messages }
+      its(:size) { should == 1 }
+    end
   end
 
   context "given iso-2022-jp encoded mail" do
@@ -35,8 +48,10 @@ describe Mail do
       mail.deliver
     end
 
-    subject { 1 + 2 }
-    it { expect(subject).to be 3 }
+    describe "messages" do
+      subject { messages }
+      its(:size) { should == 1 }
+    end
   end
 
   context "given multipart mail" do
@@ -53,15 +68,17 @@ describe Mail do
           end.charset = "UTF-8"
           html_part do
             content_type  "text/html; charset=UTF-8"
-            body          "日本語の本文 (UTF-8)"
+            body          "<h1>日本語の本文 (UTF-8)</h1>"
           end.charset = "UTF-8"
         end
 
         mail.deliver
       end
 
-      subject { 1 + 2 }
-      it { expect(subject).to be 3 }
+      describe "messages" do
+        subject { messages }
+        its(:size) { should == 2 }
+      end
     end
 
   context "given iso-2022-jp encoded mail" do
@@ -77,15 +94,17 @@ describe Mail do
           end.charset = "ISO-2022-JP"
           html_part do
             content_type  "text/html; charset=ISO-2022-JP"
-            body          "日本語の本文 (ISO-2022-JP)"
+            body          "<h1>日本語の本文 (ISO-2022-JP)</h1>"
           end.charset = "ISO-2022-JP"
         end
 
         mail.deliver
       end
 
-      subject { 1 + 2 }
-      it { expect(subject).to be 3 }
+      describe "messages" do
+        subject { messages }
+        its(:size) { should == 2 }
+      end
     end
   end
 end

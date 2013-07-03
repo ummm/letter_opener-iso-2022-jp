@@ -1,8 +1,11 @@
 
+require "letter_opener"
 require "mail-iso-2022-jp"
 require "pry-debugger"
 
 require "letter_opener-iso-2022-jp"
+
+Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.filter_run focus: true

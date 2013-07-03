@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "letter_opener-iso-2022-jp"
-  spec.version       = "0.0.1"
+  spec.version       = "0.1.0"
   spec.authors       = ["hamajyotan"]
   spec.email         = ["takashi.sakaguchi@ummm.info"]
   spec.description   = "This patch provides 'letter_opener' gem with iso-2022-jp conversion capability."

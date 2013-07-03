@@ -1,7 +1,7 @@
 
 require 'letter_opener'
 require 'nkf'
-require 'forwardable'
+require 'delegate'
 
 require 'letter_opener/iso_2022_jp_to_utf8'
 require 'letter_opener/mail_with_iso_2022_jp'

@@ -16,17 +16,15 @@ describe LetterOpener, launchy_mock: true do
         }.deliver
       end
 
-      describe "messages" do
-        subject     { messages }
-        its(:size)  { should == 1 }
-      end
-      describe "messages[#{0}]" do
-        subject     { messages[0] }
-        its(:type)  { should == :text }
-        its(:raw)   { should match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match '<pre id=\"message_body\">日本語の本文 \(UTF-8\)</pre>' }
+      it "should UTF8 encoding messages" do
+        aggregate_failures do
+          expect(messages.size).to eq 1
+          expect(messages[0].type).to eq :text
+          expect(messages[0].raw).to match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd><strong>日本語のタイトル</strong></dd>"
+          expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 \(UTF-8\)</pre>'
+        end
       end
     end
 
@@ -41,17 +39,15 @@ describe LetterOpener, launchy_mock: true do
         }.deliver
       end
 
-      describe "messages" do
-        subject     { messages }
-        its(:size)  { should == 1 }
-      end
-      describe "messages[#{0}]" do
-        subject     { messages[0] }
-        its(:type)  { should == :text }
-        its(:raw)   { should match "<dd>差出人 &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>宛先 &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match '<pre id=\"message_body\">日本語の本文 ISO-2022-JP バージョン</pre>' }
+      it "should UTF8 encoding messages" do
+        aggregate_failures do
+          expect(messages.size).to eq 1
+          expect(messages[0].type).to eq :text
+          expect(messages[0].raw).to match "<dd>差出人 &lt;foo@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>宛先 &lt;bar@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>"
+          expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 ISO-2022-JP バージョン</pre>'
+        end
       end
     end
   end
@@ -76,25 +72,20 @@ describe LetterOpener, launchy_mock: true do
         }.deliver
       end
 
-      describe "messages" do
-        subject     { messages }
-        its(:size)  { should == 2 }
-      end
-      describe "messages[#{0}]" do
-        subject     { messages[0] }
-        its(:type)  { should == :text }
-        its(:raw)   { should match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match '<pre id=\"message_body\">日本語の本文 \(UTF-8\)</pre>' }
-      end
-      describe "messages[#{1}]" do
-        subject     { messages[1] }
-        its(:type)  { should == :html }
-        its(:raw)   { should match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match "&lt;h1&gt;日本語の本文 \\(UTF-8\\)&lt;/h1&gt;" }
+      it "should UTF8 encoding messages" do
+        aggregate_failures do
+          expect(messages.size).to eq 2
+          expect(messages[0].type).to eq :text
+          expect(messages[0].raw).to match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd><strong>日本語のタイトル</strong></dd>"
+          expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 \(UTF-8\)</pre>'
+          expect(messages[1].type).to eq :html
+          expect(messages[1].raw).to match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>"
+          expect(messages[1].raw).to match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>"
+          expect(messages[1].raw).to match "<dd><strong>日本語のタイトル</strong></dd>"
+          expect(messages[1].raw).to match "&lt;h1&gt;日本語の本文 \\(UTF-8\\)&lt;/h1&gt;"
+        end
       end
     end
 
@@ -116,25 +107,20 @@ describe LetterOpener, launchy_mock: true do
         }.deliver
       end
 
-      describe "messages" do
-        subject     { messages }
-        its(:size)  { should == 2 }
-      end
-      describe "messages[#{0}]" do
-        subject     { messages[0] }
-        its(:type)  { should == :text }
-        its(:raw)   { should match "<dd>差出人 &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>宛先 &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match '<pre id=\"message_body\">日本語の本文 ISO-2022-JP バージョン</pre>' }
-      end
-      describe "messages[#{1}]" do
-        subject     { messages[1] }
-        its(:type)  { should == :html }
-        its(:raw)   { should match "<dd>差出人 &lt;foo@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd>宛先 &lt;bar@example.com&gt;</dd>" }
-        its(:raw)   { should match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match "&lt;h1&gt;日本語の本文 ISO-2022-JP バージョン&lt;/h1&gt;" }
+      it "should UTF8 encoding messages" do
+        aggregate_failures do
+          expect(messages.size).to eq 2
+          expect(messages[0].type).to eq :text
+          expect(messages[0].raw).to match "<dd>差出人 &lt;foo@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>宛先 &lt;bar@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>"
+          expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 ISO-2022-JP バージョン</pre>'
+          expect(messages[1].type).to eq :html
+          expect(messages[1].raw).to match "<dd>差出人 &lt;foo@example.com&gt;</dd>"
+          expect(messages[1].raw).to match "<dd>宛先 &lt;bar@example.com&gt;</dd>"
+          expect(messages[1].raw).to match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>"
+          expect(messages[1].raw).to match "&lt;h1&gt;日本語の本文 ISO-2022-JP バージョン&lt;/h1&gt;"
+        end
       end
     end
   end

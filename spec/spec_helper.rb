@@ -1,7 +1,7 @@
 
 require "letter_opener"
 require "mail-iso-2022-jp"
-require "pry-debugger"
+require "pry-byebug"
 
 require "letter_opener-iso-2022-jp"
 

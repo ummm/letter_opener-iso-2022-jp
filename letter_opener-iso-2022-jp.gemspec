@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "mail-iso-2022-jp"
-  spec.add_development_dependency "pry-debugger"
+  spec.add_development_dependency "pry-byebug"
 
   spec.add_dependency "letter_opener"
 end

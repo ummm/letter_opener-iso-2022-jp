@@ -94,7 +94,7 @@ describe LetterOpener, launchy_mock: true do
         its(:raw)   { should match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>" }
         its(:raw)   { should match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>" }
         its(:raw)   { should match "<dd><strong>日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match "<h1>日本語の本文 \\(UTF-8\\)</h1>" }
+        its(:raw)   { should match "&lt;h1&gt;日本語の本文 \\(UTF-8\\)&lt;/h1&gt;" }
       end
     end
 
@@ -134,7 +134,7 @@ describe LetterOpener, launchy_mock: true do
         its(:raw)   { should match "<dd>差出人 &lt;foo@example.com&gt;</dd>" }
         its(:raw)   { should match "<dd>宛先 &lt;bar@example.com&gt;</dd>" }
         its(:raw)   { should match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>" }
-        its(:raw)   { should match "<h1>日本語の本文 ISO-2022-JP バージョン</h1>" }
+        its(:raw)   { should match "&lt;h1&gt;日本語の本文 ISO-2022-JP バージョン&lt;/h1&gt;" }
       end
     end
   end

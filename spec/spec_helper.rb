@@ -2,6 +2,7 @@
 require "letter_opener"
 require "mail-iso-2022-jp"
 require "pry-byebug"
+require "rspec/its"
 
 require "letter_opener-iso-2022-jp"
 

@@ -8,8 +8,8 @@ describe LetterOpener, launchy_mock: true do
     context "given utf-8 encoded mail" do
       before do
         Mail.new(charset: "UTF-8") {
-          from            "差出人 <foo@example.com>"
-          to              "宛先 <bar@example.com>"
+          from            ["差出人1 <foo@example.com>", "差出人2 <hoge@example.com>"]
+          to              ["宛先1 <bar@example.com>", "宛先2 <fuga@example.com>"]
           subject         "日本語のタイトル"
           content_type    "text/plain; charset=UTF-8"
           body            "日本語の本文 (UTF-8)"
@@ -20,8 +20,8 @@ describe LetterOpener, launchy_mock: true do
         aggregate_failures do
           expect(messages.size).to eq 1
           expect(messages[0].type).to eq :text
-          expect(messages[0].raw).to match "<dd>&quot;差出人&quot; &lt;foo@example.com&gt;</dd>"
-          expect(messages[0].raw).to match "<dd>&quot;宛先&quot; &lt;bar@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>&quot;差出人1&quot; &lt;foo@example.com&gt;, &quot;差出人2&quot; &lt;hoge@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>&quot;宛先1&quot; &lt;bar@example.com&gt;, &quot;宛先2&quot; &lt;fuga@example.com&gt;</dd>"
           expect(messages[0].raw).to match "<dd><strong>日本語のタイトル</strong></dd>"
           expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 \(UTF-8\)</pre>'
         end
@@ -31,8 +31,8 @@ describe LetterOpener, launchy_mock: true do
     context "given iso-2022-jp encoded mail" do
       before do
         Mail.new(charset: "ISO-2022-JP") {
-          from            "差出人 <foo@example.com>"
-          to              "宛先 <bar@example.com>"
+          from            ["差出人1 <foo@example.com>", "差出人2 <hoge@example.com>"]
+          to              ["宛先1 <bar@example.com>", "宛先2 <fuga@example.com>"]
           subject         "とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル"
           content_type    "text/plain; charset=ISO-2022-JP"
           body            "日本語の本文 ISO-2022-JP バージョン"
@@ -43,8 +43,9 @@ describe LetterOpener, launchy_mock: true do
         aggregate_failures do
           expect(messages.size).to eq 1
           expect(messages[0].type).to eq :text
-          expect(messages[0].raw).to match "<dd>差出人 &lt;foo@example.com&gt;</dd>"
-          expect(messages[0].raw).to match "<dd>宛先 &lt;bar@example.com&gt;</dd>"
+          # TODO: originally should be "<dd>&quot;差出人1&quot; &lt;foo@example.com&gt;, &quot;差出人2&quot; &lt;hoge@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>差出人1 &lt;foo@example.com&gt;, 差出人2 &lt;hoge@example.com&gt;</dd>"
+          expect(messages[0].raw).to match "<dd>宛先1 &lt;bar@example.com&gt;, 宛先2 &lt;fuga@example.com&gt;</dd>"
           expect(messages[0].raw).to match "<dd><strong>とてもとてもとてもとてもとてもとても very とてもとてもとてもとてもとてもとても長い日本語のタイトル</strong></dd>"
           expect(messages[0].raw).to match '<pre id=\"message_body\">日本語の本文 ISO-2022-JP バージョン</pre>'
         end
